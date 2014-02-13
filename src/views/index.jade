@@ -2,4 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Välj ett team för att visa mappen
+
+  ul
+    each team in teams
+      li: a(href='/#{team}')= team

@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= team
+
+  p Detta är data för team #{team}
+
+  #heatmap
+
+block scripts
+    script!= 'var points = ' + JSON.stringify(data) + ';'
+    script(src='/script/heatmap.js'   type='application/javascript')
+    script(src='/script/happyheat.js' type='application/javascript')

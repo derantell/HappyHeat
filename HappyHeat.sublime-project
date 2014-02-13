@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "E:\\github\\HappyHeat",
+            "folder_exclude_patterns": [
+                ".vagrant", 
+                "docs",
+                "node_modules"
+            ],
+            "file_exclude_patterns": [
+                "*.sublime-project"
+            ]
+		}
+	]
+}

@@ -5,3 +5,9 @@ body {
 a {
   color: #00b7ff;
 }
+#heatmap {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #c0c0c0;
+  position: relative;
+}
