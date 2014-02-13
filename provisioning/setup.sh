@@ -8,6 +8,10 @@ sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update
 sudo apt-get install -y nodejs
 
-echo "--- Install app depenedencies ---"
+echo "--- Installing coffee script ---"
+sudo npm install -g coffee-script
+
+echo "--- Start init and start app ---"
 cd /vagrant/src
 sudo npm install
+sudo node app.js
