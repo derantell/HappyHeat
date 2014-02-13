@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>happiness module</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="happiness-module">happiness module</h1>
+
+          
+        
+
+        
+      </div>
+
+      
+        
+        <p>This module fetches team happines index data from a google spreadsheet.
+The conventions of the spreadsheet are the following:</p>
+<ul>
+<li>Each spreadsheet contains the happiness index data of a team for a year</li>
+<li>The spreadsheet has a worksheet for each month of that year named 
+‘Jan’, ‘Feb’ etc</li>
+<li>The worksheet for a month has two columns named ‘motivated’ and ‘productive’</li>
+<li>The first row is a heading and the second is the average value of the columns</li>
+</ul>
+
+        
+      
+        
+        <h2 id="example-use">Example use</h2>
+<pre><code><span class="hljs-comment"># Import the function that fetches data from Google</span>
+happiness = <span class="hljs-built_in">require</span> <span class="hljs-string">'./happiness'</span>
+
+<span class="hljs-comment"># The function expects the name of the team as its first argument</span>
+<span class="hljs-comment"># An optional month can be specified, default is the current month</span>
+<span class="hljs-reserved">var</span> data = happiness <span class="hljs-string">'foxtrot'</span>, <span class="hljs-string">'May'</span>
+
+<span class="hljs-comment"># The result is a Promises/A+ promise, let's log the result when done</span>
+data.done <span class="hljs-function"><span class="hljs-params">(res)</span> -&gt;</span> 
+    <span class="hljs-built_in">console</span>.log res
+</code></pre>
+        
+      
+        
+        <h2 id="imports">Imports</h2>
+
+        
+      
+        
+        <p>Require the modules </p>
+<ul>
+<li><strong>google-spreadsheet</strong> is used to fetch data from google</li>
+<li><strong>promise</strong> makes the async calls easier to handle</li>
+<li><strong>lodash</strong> adds a bunch of functional functions </li>
+</ul>
+
+        
+          <div class='highlight'><pre>
+Gss     = <span class="hljs-built_in">require</span> <span class="hljs-string">'google-spreadsheet'</span>
+Promise = <span class="hljs-built_in">require</span> <span class="hljs-string">'promise'</span>
+_       = <span class="hljs-built_in">require</span> <span class="hljs-string">'lodash'</span></pre></div>
+        
+      
+        
+        <h2 id="configuration">Configuration</h2>
+
+        
+      
+        
+        <p>Each team has a spreadsheet. This object contains the id of each sheet.</p>
+
+        
+          <div class='highlight'><pre>
+happySheets = 
+	<span class="hljs-attribute">foxtrot</span>: <span class="hljs-string">'0AhTx3N65-AThdFdxQ2tEWm9VcnlwWmROaEliRE1sMHc'</span></pre></div>
+        
+      
+        
+        <h2 id="fetching">Fetching</h2>
+
+        
+      
+        
+        <p>We want to fetch the happiness index data for a team
+and month </p>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-function"><span class="hljs-title">getHappiness</span> = <span class="hljs-params">(team, month)</span> -&gt;</span></pre></div>
+        
+      
+        
+        <p>Create a new google-spreadsheet object for the specified team
+and wrap the <code>getInfo</code> method in a promise</p>
+
+        
+          <div class='highlight'><pre>	key   = happySheets[team]
+	sheet = <span class="hljs-keyword">new</span> Gss key
+	fetchInfo = Promise.denodeify sheet.getInfo</pre></div>
+        
+      
+        
+        <p>Fetch the spreadsheet info</p>
+
+        
+          <div class='highlight'><pre>	fetchInfo()</pre></div>
+        
+      
+        
+        <p>then get the rows of the specified month</p>
+
+        
+          <div class='highlight'><pre>		.<span class="hljs-keyword">then</span> getRowsOf month</pre></div>
+        
+      
+        
+        <p>and map them to a list of motivated/productive pairs</p>
+
+        
+          <div class='highlight'><pre>		.<span class="hljs-keyword">then</span> mapToValues</pre></div>
+        
+      
+        
+        <p>The spreadsheet info object contains a list of worksheets. We must
+filter out the worksheet that matches the specified month.</p>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-function"><span class="hljs-title">getRowsOf</span> = <span class="hljs-params">(month)</span> -&gt;</span>
+	<span class="hljs-function"><span class="hljs-params">(info)</span> -&gt;</span>  
+		monthSheet = _(info.worksheets)
+			.filter <span class="hljs-function"><span class="hljs-params">( ws )</span> -&gt;</span> ws.title == month
+			.first();
+		(Promise.denodeify monthSheet.getRows)()</pre></div>
+        
+      
+        
+        <p>Each row should have the properties <code>motivated</code> and <code>productive</code>. 
+These are represented as strings and needs to be converted to numbers</p>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-function"><span class="hljs-title">mapToValues</span> = <span class="hljs-params">(rows)</span> -&gt;</span>
+	_(rows)</pre></div>
+        
+      
+        
+        <p>The first row contains averages an can be skipped</p>
+
+        
+          <div class='highlight'><pre>		.drop <span class="hljs-number">1</span></pre></div>
+        
+      
+        
+        <p>Convert the string values to numbers</p>
+
+        
+          <div class='highlight'><pre>		.map <span class="hljs-function"><span class="hljs-params">(r)</span> -&gt;</span> { 
+			<span class="hljs-attribute">m</span>: asNumber(r.motivated), 
+			<span class="hljs-attribute">p</span>: asNumber(r.productive) 
+		}</pre></div>
+        
+      
+        
+        <p>and return the wrapped value</p>
+
+        
+          <div class='highlight'><pre>		.value()</pre></div>
+        
+      
+        
+        <p>Numbers are returned from the spreadsheet as strings with swedish format,
+therefore we must replace <code>,</code> with <code>.</code></p>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-function"><span class="hljs-title">normalizeNumber</span> = <span class="hljs-params">(number)</span> -&gt;</span>
+	(number <span class="hljs-keyword">or</span> <span class="hljs-string">'0'</span>).replace <span class="hljs-string">','</span>, <span class="hljs-string">'.'</span></pre></div>
+        
+      
+        
+        <p>We need to convert the string from the spreadsheet to a number. We do 
+this by composing our <code>normalizeNumber</code> function with <code>parseFloat</code>.</p>
+
+        
+          <div class='highlight'><pre>
+asNumber = _.compose parseFloat, normalizeNumber</pre></div>
+        
+      
+        
+        <h2 id="public-interface">Public interface</h2>
+
+        
+      
+        
+        <p>We’re exporting the <code>getHappiness</code> function, which returns a 
+<a href="http://www.promisejs.org/intro/">promise</a> of the data for 
+the specified team and month </p>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = getHappiness</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
