@@ -1,13 +1,19 @@
 extends layout
 
 block content
-  h1= team
+  h1 Team #{team}
 
-  p Detta är data för team #{team}
+  p Visar data för team #{team}, #{month} #{year}
 
   #heatmap
+    - var length = [1,2,3,4,5];
+    table.grid
+      each row in length
+        tr
+          each cell in length
+            td 
 
 block scripts
-    script!= 'var points = ' + JSON.stringify(data) + ';'
-    script(src='/script/heatmap.js'   type='application/javascript')
-    script(src='/script/happyheat.js' type='application/javascript')
+  script var points = !{JSON.stringify(data)};
+  script(src='/static/script/heatmap.js'   type='application/javascript')
+  script(src='/static/script/happyheat.js' type='application/javascript')

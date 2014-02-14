@@ -6,7 +6,7 @@
             data   = [],
             config = {
                 element: heatmapElement,
-                radius:  30,
+                radius:  60,
                 opacity: 50
             },
             heatmap = h337.create(config);
@@ -18,6 +18,6 @@
             });
         });
 
-        heatmap.store.setDataSet({max: 4, data: data});
+        heatmap.store.setDataSet({max: 5, data: data});
     }
 })(points);

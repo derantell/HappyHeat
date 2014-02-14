@@ -35,23 +35,14 @@ Gss     = require 'google-spreadsheet'
 Promise = require 'promise'
 _       = require 'lodash'
 
-
-# ## Configuration
- 
-# Each team has a spreadsheet. This object contains the id of each sheet.
-
-happySheets = 
-	foxtrot: '0AhTx3N65-AThdFdxQ2tEWm9VcnlwWmROaEliRE1sMHc' 
-
 # ## Fetching 
  
 # We want to fetch the happiness index data for a team
 # and month 
 
-getHappiness = (team, month) ->
+getHappiness = (key, month) ->
 	# Create a new google-spreadsheet object for the specified team
 	# and wrap the `getInfo` method in a promise
-	key   = happySheets[team]
 	sheet = new Gss key
 	fetchInfo = Promise.denodeify sheet.getInfo
 
