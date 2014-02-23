@@ -18,15 +18,15 @@ app.use express.logger 'dev'
 app.use express.json()
 app.use express.urlencoded()
 app.use express.methodOverride()
-app.use require('stylus').middleware path.join __dirname, 'public'
-app.use '/static', express.static path.join __dirname, 'public'
 app.use app.router
+app.use require('stylus').middleware path.join __dirname, 'public'
+app.use express.static path.join __dirname, 'public'
 
 # development only
 app.use express.errorHandler() if app.get('env') is 'development'
 
-app.get '/',      routes.index
-app.get '/:team/:year?/:month?', team.happiness
+app.get '/'                    , routes.index
+app.get '/teams/:team/:year?/:month?', team.happiness
 
 http
     .createServer app 
