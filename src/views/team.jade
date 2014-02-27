@@ -1,17 +1,31 @@
 extends layout
 
+block header
+  .container
+    img(src='/images/#{team}.png') 
+    .team-wrap
+      h1 Team #{team}
+      .motto "#{motto}"
+
+
 block content
-  h1 Team #{team}
+  .container
+    p Visar data för team #{team}, #{month} #{year}
 
-  p Visar data för team #{team}, #{month} #{year}
+    #heatmap
+      //- - var length = [1,2,3,4];
+      //- table.grid
+      //-   each row in length
+      //-     tr
+      //-       each cell in length
+      //-         td 
 
-  #heatmap
-    - var length = [1,2,3,4];
-    table.grid
-      each row in length
-        tr
-          each cell in length
-            td 
+block footer
+  .container
+    img(src='/images/uncle-sam.png' alt='Pointing man')
+    blockquote "Jag vill att du uppdaterar ditt Happy Index varje dag!"
+      cite Mats Lindblom, CEO 
+      
 
 block scripts
   script var points = !{JSON.stringify(data)};

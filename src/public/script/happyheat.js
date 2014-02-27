@@ -1,8 +1,8 @@
 (function (pts) {
     window.onload = function() {
         var heatmapElement = document.getElementById('heatmap'),
-            xcoeff = heatmapElement.clientWidth  / 4.0,
-            ycoeff = heatmapElement.clientHeight / 4.0,
+            xcoeff = heatmapElement.clientWidth  / 6.0,
+            ycoeff = heatmapElement.clientHeight / 6.0,
             data   = [],
             config = {
                 element: heatmapElement,
@@ -13,8 +13,8 @@
 
         pts.forEach( function( point ) { 
             data.push({
-                x: xcoeff * (point.p-1), 
-                y: heatmapElement.clientHeight - ycoeff * (point.m-1)
+                x: xcoeff * (point.p), 
+                y: heatmapElement.clientHeight - ycoeff * (point.m)
             });
         });
 

@@ -1,5 +1,5 @@
 happiness = require '../modules/happiness'
-config    = require '../config'
+teams = (require '../config').teams
 
 thisYear  = new Date().getFullYear()
 thisMonth = new Date().getMonth()
@@ -13,12 +13,13 @@ exports.happiness = (req,res) ->
     team  = req.params.team
     year  = req.params.year  or thisYear
     month = req.params.month or months[thisMonth]
-    key   = config.teams[team][year];
+    key   = teams[team][year];
 
     data = happiness key, month 
     data.done (indexData ) -> 
         res.render 'team', 
             team:  team
+            motto: teams[team].motto
             year:  year
             month: month
             data:  indexData
