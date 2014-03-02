@@ -11,6 +11,7 @@
     "lodash": "*",
     "google-spreadsheet": "*",
     "stylus": "*",
-    "promise": "*"
+    "promise": "*",
+    "marked": "*"
   }
 }
