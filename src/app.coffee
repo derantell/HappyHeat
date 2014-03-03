@@ -1,9 +1,8 @@
-
 express = require 'express'
-routes = require './routes'
-team = require './routes/team'
-http = require 'http'
-path = require 'path'
+routes  = require './routes'
+team    = require './routes/team'
+http    = require 'http'
+path    = require 'path'
 
 app = express()
 
@@ -25,7 +24,7 @@ app.use express.static path.join __dirname, 'public'
 # development only
 app.use express.errorHandler() if app.get('env') is 'development'
 
-app.get '/'                    , routes.index
+app.get '/', routes.index
 app.get '/teams/:team/:year?/:month?', team.happiness
 
 http

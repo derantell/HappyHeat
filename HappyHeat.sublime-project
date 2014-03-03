@@ -3,7 +3,7 @@
 	[
 		{
 			"follow_symlinks": true,
-			"path": "E:\\github\\HappyHeat",
+			"path": ".",
             "folder_exclude_patterns": [
                 ".vagrant", 
                 "docs",
