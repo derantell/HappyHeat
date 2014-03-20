@@ -1,9 +1,17 @@
 extends layout
 
-block content
-  h1= title
-  p Välj ett team för att visa mappen
+block header
+  .container: h1 Happy Index 	
 
-  ul
-    each team in teams
-      li: a(href='/teams/#{team}')= team
+block content
+  .container
+    p Välj ett team för att visa mappen
+
+    ul.team-list
+      each setting, team in teams
+        li.eight.columns 
+          .team
+            img(src='/images/#{team}.png') 
+            a(href='/teams/#{team}') Team #{team}
+          .motto "#{setting.motto}"
+

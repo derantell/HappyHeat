@@ -1,11 +1,11 @@
 happiness = require '../modules/happiness'
-teams = (require '../config').teams
+teams     = (require '../config').teams
 
 thisYear  = new Date().getFullYear()
 thisMonth = new Date().getMonth()
 
 months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' 
 ]
 

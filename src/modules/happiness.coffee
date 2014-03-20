@@ -71,10 +71,10 @@ mapToValues = (rows) ->
 		# The first row contains averages an can be skipped
 		.drop 1
 		# Convert the string values to numbers
-		.map (r) -> { 
-			m: asNumber(r.motivated), 
-			p: asNumber(r.productive) 
-		}
+		.map (r) ->  
+			m: asNumber r.motivated 
+			p: asNumber r.productive 
+		
 		# and return the wrapped value
 		.value()
 

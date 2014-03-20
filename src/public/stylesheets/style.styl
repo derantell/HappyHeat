@@ -11,8 +11,8 @@ body
   background-color #2B303B
   color font-color
 
-a, a:visited
-  color #FFF
+a, a:visited, a:hover
+  color font-color
 
 p 
   margin 10px
@@ -27,6 +27,11 @@ p
     padding 20px
     border-bottom 1px border-color solid
 
+    h1
+      color font-color
+      text-transform capitalize
+      margin 0 
+
     img 
       float left
       padding-right 20px
@@ -35,15 +40,9 @@ p
     .team-wrap
       float left
 
-      h1
-        color font-color
-        text-transform capitalize
-        margin 0 
-
-      .motto
-        font-size .8em
-        font-style italic
-      
+.motto
+  font-size .8em
+  font-style italic
 
 .super-container:after
   content ""
@@ -82,3 +81,10 @@ footer
       
       td
         border 1px dashed border-color
+
+.team-list
+  .team
+    font-size 2em
+    a
+      padding 0 0 0 .5em 
+      vertical-align 87%
